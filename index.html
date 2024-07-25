@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server 2</title>
+
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+
+<body>
+<nav>
+    <div>
+        <a class="PORTAL_2" href="{{ url_for('')}}">PORTAL 2 INTERFACE</a>
+    </div>
+</nav> 
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+    <section class="messages">
+        {% for category, msg in messages %}
+            <p class="{{category}}">{{msg}}</p>
+        {% endfor %}
+    </section>
+    {% endif %}
+    {% endwith %}
+    
+<h2>$TABLE_NAME</h2>
+
+<table>
+    <tr>
+        <th>COLUMN 1 NAME</th>
+        <th>COLUMN 2 NAME</th>
+        <th>COLUMN 3 NAME</th>
+    </tr>
+
+    <tr>
+        <td>Row 1, Cell 1</td>
+        <td>Row 1, Cell 2</td>
+        <td>Row 1, Cell 3</td>
+    </tr>
+    <tr>
+        <td>Row 2, Cell 1</td>
+        <td>Row 2, Cell 2</td>
+        <td>Row 2, Cell 3</td>
+    </tr>
+    <tr>
+        <td>Row 3, Cell 1</td>
+        <td>Row 3, Cell 2</td>
+        <td>Row 3, Cell 3</td>
+    </tr>
+    <tr>
+        <td>Row 4, Cell 1</td>
+        <td>Row 4, Cell 2</td>
+        <td>Row 4, Cell 3</td>
+    </tr>
+    <tr>
+        <td>Row 5, Cell 1</td>
+        <td>Row 5, Cell 2</td>
+        <td>Row 5, Cell 3</td>
+    </tr>
+</table>
+</body>
+</html>
