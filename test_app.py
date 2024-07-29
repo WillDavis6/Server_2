@@ -37,5 +37,14 @@ class DataBaseConnectionTestCase(unittest.TestCase):
             for table in expected_tables:
                 self.assertIn(table, actual_tables, f"Table {table} does not exist in the database")
 
+    def test_table_columns(self):
+        with app.app_context():
+            actual_tables = self.inspector.get_table_names()
+            for table_name in expected_tables:
+                table = next((tab for tab in actual_tables if tab['name'] == table_name), None)
+                columns = self.inspector.get_columns(table)
+                column = next((col for col in columns if col['name'] == column_name), None)
+
+
 if __name__ == '__main__':
     unittest.main()
