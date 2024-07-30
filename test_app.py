@@ -37,7 +37,7 @@ class DataBaseConnectionTestCase(unittest.TestCase):
             self.assertIn(table, actual_tables, f"Table {table} does not exist in the database")
 
     
-    def test_parts_table_columns(self):
+    def test_tables_columns_and_types(self):
         actual_tables = self.inspector.get_table_names()
 
         for column_names, column_type, table_name in zip(table_column_list, table_column_type_list, actual_tables):
@@ -45,8 +45,6 @@ class DataBaseConnectionTestCase(unittest.TestCase):
         
             #Find Columns in table found with match
             columns = self.inspector.get_columns(table_name)
-
-            print(f'!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! {column_names, column_type, table_name}')
             
             #Iterate over columns to look for
             for name, column_type_z in zip(column_names, column_type) :
@@ -55,14 +53,23 @@ class DataBaseConnectionTestCase(unittest.TestCase):
 
                 #Test if column exists
                 self.assertIsNotNone(column, f"Column {name} does not exist in {table_name}")
-                print(f'{name}: {table_name}')
+             
 
                 #Test if column type is correct
                 column_type = column['type']
                 self.assertTrue(isinstance(column_type, column_type_z), f"Column {name}, is not of the type {column_type}")
-                print(f'{name}: {column_type}')
             
-    
+            
+    def test_table_relationships(self):
+        foreign_keys = self.inspector.get_foreign_keys('nacelle_5005_joggle_ref')
+        related_tables = [fk['referred_table'] for fk in foreign_keys]
+        self.assertIn('a10_5005_joggle', related_tables, "Table 'a10_5005_joggle' does not have a foreign key")
+
+    def test_primary_keys(self):
+        table_name = 'a10_5005_joggle'
+        expected_pks = ['joggle_id']
+        primary_keys = self.inspector.get_pk_constraint(table_name)['constrained_columns']
+        self.assertEqual(primary_keys, expected_pks, f"Primary keys {primary_keys} do not match expected {expected_pks}")
 
 
 if __name__ == '__main__':
