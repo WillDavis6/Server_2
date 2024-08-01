@@ -71,6 +71,11 @@ class DataBaseConnectionTestCase(unittest.TestCase):
         primary_keys = self.inspector.get_pk_constraint(table_name)['constrained_columns']
         self.assertEqual(primary_keys, expected_pks, f"Primary keys {primary_keys} do not match expected {expected_pks}")
 
+    def test_home_page(self):
+        response = self.app.get('/')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b'Welcome', response.data)
+
 
 if __name__ == '__main__':
     unittest.main()
