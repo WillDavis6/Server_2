@@ -74,7 +74,14 @@ class DataBaseConnectionTestCase(unittest.TestCase):
     def test_home_page(self):
         response = self.app.get('/')
         self.assertEqual(response.status_code, 200)
-        self.assertIn(b'Welcome', response.data)
+        self.assertIn(b'Server 2', response.data)
+
+    def test_404_error(self):
+        response = self.app.get('/non_existent_page')
+        self.assertEqual(response.status_code, 404)
+        self.assertIn(b'Page Not Found', response.data)
+    
+    
 
 
 if __name__ == '__main__':
